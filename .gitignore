@@ -34,3 +34,6 @@ backend/outputs/
 .DS_Store
 
 /outputs/
+
+/backend/outputs_delay0/
+/backend/outputs_delay10/
