@@ -33,3 +33,5 @@ backend/outputs/
 
 # macOS
 .DS_Store
+
+/outputs/
