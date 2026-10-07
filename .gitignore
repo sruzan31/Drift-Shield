@@ -29,7 +29,6 @@ htmlcov/
 # Outputs
 backend/outputs/
 *.csv
-*.json
 
 # macOS
 .DS_Store
