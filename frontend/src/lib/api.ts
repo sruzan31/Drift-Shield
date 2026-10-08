@@ -5,7 +5,9 @@
 import type {
   ControlRequest,
   ControlResponse,
+  CreateCSVRunRequest,
   CreateRunRequest,
+  CSVValidationResponse,
   HealthStatus,
   IncidentItem,
   PaginatedResponse,
@@ -14,7 +16,7 @@ import type {
 } from '../types';
 
 export const API_BASE_URL =
-  (import.meta.env.VITE_API_URL as string) || 'http://127.0.0.1:8000';
+  (import.meta.env.VITE_API_URL as string) || '';
 
 class ApiError extends Error {
   status: number;
@@ -68,6 +70,27 @@ export const api = {
 
   createRun: (data: CreateRunRequest): Promise<RunSummary> =>
     request<RunSummary>('/api/runs', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  validateCSV: (csvContent: string): Promise<CSVValidationResponse> => {
+    const formData = new FormData();
+    formData.append('csv_content', csvContent);
+    return fetch(`${API_BASE_URL}/api/runs/validate-csv`, {
+      method: 'POST',
+      body: formData,
+    }).then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: res.statusText }));
+        throw new Error(err.detail || 'CSV validation failed');
+      }
+      return res.json();
+    });
+  },
+
+  createCSVRun: (data: CreateCSVRunRequest): Promise<RunSummary> =>
+    request<RunSummary>('/api/runs/csv-replay', {
       method: 'POST',
       body: JSON.stringify(data),
     }),

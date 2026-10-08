@@ -172,3 +172,10 @@ pytest tests/ -v
 - Database persistence
 - Real data connectors
 # Drift-Shield
+
+## Where to find things
+
+- **Frontend**: `npm --prefix frontend run dev` (or `cd frontend && npm run dev`)
+- **Frontend URL**: http://localhost:5173
+- **Backend**: `PYTHONPATH=backend/src backend/.venv/bin/python -m uvicorn driftshield.api.app:app --host 127.0.0.1 --port 8000`
+

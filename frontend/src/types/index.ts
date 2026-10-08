@@ -8,6 +8,7 @@ export interface CreateRunRequest {
   warmup_size: number;
   label_budget: number;
   label_delay: number;
+  monitor_rate?: number;
   seed: number;
   drift_start_sequence?: number | null;
   gradual_window?: number | null;
@@ -21,6 +22,34 @@ export interface CreateRunRequest {
   run_id?: string | null;
   parent_run_id?: string | null;
   idempotency_key?: string | null;
+}
+
+export interface CSVValidationResponse {
+  valid: boolean;
+  total_rows: number;
+  columns: string[];
+  detected_mappings: {
+    feature_0: string | null;
+    feature_1: string | null;
+    label: string | null;
+  };
+  preview_rows: Record<string, any>[];
+}
+
+export interface CreateCSVRunRequest {
+  csv_content: string;
+  feature_0: string;
+  feature_1: string;
+  label?: string | null;
+  warmup_size?: number;
+  label_budget?: number;
+  label_delay?: number;
+  monitor_rate?: number;
+  adwin_delta?: number;
+  target_training_labels?: number;
+  evaluation_target_events?: number;
+  events_per_second?: number;
+  run_id?: string | null;
 }
 
 export interface ControlRequest {

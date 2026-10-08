@@ -81,8 +81,12 @@ export class RunWebSocketClient {
   }
 
   private _getWsUrl(runId: string): string {
-    const wsBase = API_BASE_URL.replace(/^http:\/\//, 'ws://').replace(/^https:\/\//, 'wss://');
-    return `${wsBase}/api/runs/${encodeURIComponent(runId)}/live`;
+    if (API_BASE_URL) {
+      const wsBase = API_BASE_URL.replace(/^http:\/\//, 'ws://').replace(/^https:\/\//, 'wss://');
+      return `${wsBase}/api/runs/${encodeURIComponent(runId)}/live`;
+    }
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    return `${protocol}//${window.location.host}/api/runs/${encodeURIComponent(runId)}/live`;
   }
 
   private _initiateConnection(): void {
